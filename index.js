@@ -1,5 +1,6 @@
-import express from "express";
-import fetch from "node-fetch";
+// index.js
+const express = require("express");
+const fetch = require("node-fetch");
 
 // ======================
 // Config Telegram (imposta su Render)
@@ -22,15 +23,19 @@ app.get("/", (req, res) => {
 const sendTelegram = async (message) => {
   if (!TELEGRAM_TOKEN || !CHAT_ID) return;
   const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
-  await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: CHAT_ID,
-      text: message,
-      parse_mode: "HTML"
-    })
-  });
+  try {
+    await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        text: message,
+        parse_mode: "HTML"
+      })
+    });
+  } catch (err) {
+    console.error("Errore invio Telegram:", err);
+  }
 };
 
 // ======================
@@ -56,7 +61,6 @@ app.post("/webhook-tv", async (req, res) => {
     }
 
     await sendTelegram(message);
-
     console.log("Webhook received:", req.body);
     res.status(200).send("OK");
   } catch (err) {
