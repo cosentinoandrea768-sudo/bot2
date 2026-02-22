@@ -2,14 +2,20 @@ import express from "express";
 import fetch from "node-fetch";
 
 // ======================
-// Config Telegram
-const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN; // Imposta su Render
-const CHAT_ID = process.env.CHAT_ID;               // Imposta su Render
+// Config Telegram (imposta su Render)
+const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN; // Bot token
+const CHAT_ID = process.env.CHAT_ID;               // Chat ID
 
 // ======================
 // Inizializza app
 const app = express();
 app.use(express.json()); // parser JSON obbligatorio
+
+// ======================
+// Route di test ping per UptimeRobot
+app.get("/", (req, res) => {
+  res.send("Bot is running ✅");
+});
 
 // ======================
 // Funzione invio Telegram
