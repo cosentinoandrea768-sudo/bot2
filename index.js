@@ -1,10 +1,6 @@
 import express from "express";
 import fetch from "node-fetch";
-// Prima (v3 ESM)
-// import fetch from "node-fetch";
 
-// Con v2 CommonJS
-const fetch = require("node-fetch");
 
 const app = express();
 app.use(express.json());
